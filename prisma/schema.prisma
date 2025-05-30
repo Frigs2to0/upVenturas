@@ -53,6 +53,7 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    password      String?
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
@@ -61,29 +62,24 @@ model User {
 }
 
 model UserUp {
-  id                 String   @id @default(uuid())
-  userId             String   @unique
-  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id     String @id @default(uuid())
+    userId String @unique
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  nomeCompleto       String
-  telefone           String
-  cpf                String   @unique
-  dataNascimento     DateTime
-  endereco           String
-  cidade             String
-  estado             String
-  cep                String
-  cursoInteresse     String?
-  modalidade         String?
-  periodoEstudo      String?
-  jaEstudou          Boolean  @default(false)
-  receberInformacoes Boolean  @default(true)
-  aceitarTermos      Boolean
+    nomeCompleto       String
+    telefone           String
+    cpf                String   @unique
+    dataNascimento     DateTime
+    endereco           String
+    cidade             String
+    estado             String
+    cep                String
+    receberInformacoes Boolean  @default(true)
+    aceitarTermos      Boolean
 
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
-
 
 model VerificationToken {
     identifier String

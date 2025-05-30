@@ -5,7 +5,6 @@
 import { NextResponse } from "next/server"
 import { hash } from "bcryptjs"
 import { db } from "@/server/db"
-import { signIn } from "@/server/auth"
 
 export async function POST(req: Request) {
   try {
@@ -22,10 +21,6 @@ export async function POST(req: Request) {
       cidade,
       estado,
       cep,
-      cursoInteresse,
-      modalidade,
-      periodoEstudo,
-      jaEstudou,
       receberInformacoes,
       aceitarTermos,
     } = body
@@ -35,12 +30,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Email já cadastrado" }, { status: 400 })
     }
 
-    const hashedPassword = await hash(senha, 10)
+    const hashedPassword = await hash(senha, 8)
 
     const user = await db.user.create({
       data: {
         email,
         name: nomeCompleto,
+        password: hashedPassword
       },
     })
 
@@ -55,19 +51,9 @@ export async function POST(req: Request) {
         cidade,
         estado,
         cep,
-        cursoInteresse,
-        modalidade,
-        periodoEstudo,
-        jaEstudou,
         receberInformacoes,
         aceitarTermos,
       },
-    })
-
-    await signIn("credentials", {
-      email,
-      password: senha,
-      redirect: false,
     })
 
     return NextResponse.json({ success: true })
