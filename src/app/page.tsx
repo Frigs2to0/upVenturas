@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { BookOpen, Users, Award, Clock, MapPin, Phone, Mail } from "lucide-react"
+import Footer from "@/components/footer"
+import Header from "@/components/header"
 
 const courses = [
   {
@@ -50,46 +52,7 @@ const courses = [
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-blue-900 text-white">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-blue-900" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold">UP</h1>
-                <p className="text-sm text-blue-200">Universidade Positivo</p>
-              </div>
-            </div>
-            <nav className="hidden md:flex space-x-6">
-              <Link href="/" className="hover:text-blue-200 transition-colors">
-                Início
-              </Link>
-              <Link href="#cursos" className="hover:text-blue-200 transition-colors">
-                Cursos
-              </Link>
-              <Link href="#sobre" className="hover:text-blue-200 transition-colors">
-                Sobre
-              </Link>
-              <Link href="#contato" className="hover:text-blue-200 transition-colors">
-                Contato
-              </Link>
-            </nav>
-            <div className="flex space-x-2">
-              <Link href="/login">
-                <Button variant="outline" className="text-blue-900 border-white hover:bg-white">
-                  Login
-                </Button>
-              </Link>
-              <Link href="/cadastro">
-                <Button className="bg-orange-500 hover:bg-orange-600">Cadastre-se</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
@@ -290,105 +253,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-blue-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <BookOpen className="w-8 h-8" />
-                <span className="text-xl font-bold">UP</span>
-              </div>
-              <p className="text-blue-200">
-                Universidade Positivo - Transformando vidas através da educação há mais de 30 anos.
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-4">Cursos</h3>
-              <ul className="space-y-2 text-blue-200">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Graduação
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Pós-graduação
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    MBA
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    EAD
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-4">Institucional</h3>
-              <ul className="space-y-2 text-blue-200">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Sobre a UP
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Missão e Valores
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Trabalhe Conosco
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Imprensa
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="font-semibold mb-4">Suporte</h3>
-              <ul className="space-y-2 text-blue-200">
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Central do Aluno
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Biblioteca
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Financeiro
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white">
-                    Ouvidoria
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-blue-800 mt-8 pt-8 text-center text-blue-200">
-            <p>&copy; 2025 Universidade Positivo. Todos os direitos reservados.</p>
-          </div>
-        </div>
-      </footer>
+      
+      <Footer />    
     </div>
   )
 }
