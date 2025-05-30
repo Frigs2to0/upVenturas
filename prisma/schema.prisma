@@ -1,16 +1,9 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
 
 datasource db {
     provider = "mysql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
 }
 
@@ -63,7 +56,34 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+
+    userUp UserUp?
 }
+
+model UserUp {
+  id                 String   @id @default(uuid())
+  userId             String   @unique
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  nomeCompleto       String
+  telefone           String
+  cpf                String   @unique
+  dataNascimento     DateTime
+  endereco           String
+  cidade             String
+  estado             String
+  cep                String
+  cursoInteresse     String?
+  modalidade         String?
+  periodoEstudo      String?
+  jaEstudou          Boolean  @default(false)
+  receberInformacoes Boolean  @default(true)
+  aceitarTermos      Boolean
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
 
 model VerificationToken {
     identifier String

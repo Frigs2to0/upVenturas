@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
-import { BookOpen, ArrowLeft } from "lucide-react"
+import Header from "@/components/header"
 
 export default function CadastroPage() {
   const [formData, setFormData] = useState({
@@ -33,6 +34,8 @@ export default function CadastroPage() {
     aceitarTermos: false,
   })
 
+  const router = useRouter()
+
   const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({
       ...prev,
@@ -40,35 +43,43 @@ export default function CadastroPage() {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Dados do cadastro:", formData)
-    // Aqui você implementaria a lógica de envio dos dados
-    alert("Cadastro realizado com sucesso! Verifique seu e-mail.")
+
+    if (formData.senha !== formData.confirmarSenha) {
+      alert("As senhas não coincidem.")
+      return
+    }
+
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const data = await res.json()
+
+      if (!res.ok) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        alert(data.error ?? "Erro ao cadastrar.")
+        return
+      }
+
+      alert("Cadastro realizado com sucesso!")
+      setTimeout(() => {
+        router.push("/login")
+      }, 0)
+    } catch (error) {
+      console.error(error)
+      alert("Erro ao conectar com o servidor.")
+    }
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-blue-900 text-white">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-4">
-              <ArrowLeft className="w-5 h-5" />
-              <div className="flex items-center space-x-2">
-                <BookOpen className="w-8 h-8" />
-                <span className="text-xl font-bold">UP</span>
-              </div>
-            </Link>
-            <Link href="/login">
-              <Button variant="outline" className="text-blue-900 border-white hover:bg-white">
-                Já tenho conta
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
+      <Header />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-2xl mx-auto">
           <Card>
@@ -234,81 +245,8 @@ export default function CadastroPage() {
                   </div>
                 </div>
 
-                {/* Informações Acadêmicas */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-gray-900 border-b pb-2">Interesse Acadêmico</h3>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="cursoInteresse">Curso de Interesse *</Label>
-                      <Select
-                        value={formData.cursoInteresse}
-                        onValueChange={(value) => handleInputChange("cursoInteresse", value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione um curso" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="engenharia-software">Engenharia de Software</SelectItem>
-                          <SelectItem value="administracao">Administração</SelectItem>
-                          <SelectItem value="medicina">Medicina</SelectItem>
-                          <SelectItem value="design-grafico">Design Gráfico</SelectItem>
-                          <SelectItem value="direito">Direito</SelectItem>
-                          <SelectItem value="psicologia">Psicologia</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="modalidade">Modalidade *</Label>
-                      <Select
-                        value={formData.modalidade}
-                        onValueChange={(value) => handleInputChange("modalidade", value)}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Selecione" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="presencial">Presencial</SelectItem>
-                          <SelectItem value="ead">EAD</SelectItem>
-                          <SelectItem value="hibrido">Híbrido</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="periodoEstudo">Período de Estudo Preferido *</Label>
-                    <Select
-                      value={formData.periodoEstudo}
-                      onValueChange={(value) => handleInputChange("periodoEstudo", value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="matutino">Matutino</SelectItem>
-                        <SelectItem value="vespertino">Vespertino</SelectItem>
-                        <SelectItem value="noturno">Noturno</SelectItem>
-                        <SelectItem value="integral">Integral</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
                 {/* Checkboxes */}
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id="jaEstudou"
-                      checked={formData.jaEstudou}
-                      onCheckedChange={(checked) => handleInputChange("jaEstudou", checked as boolean)}
-                    />
-                    <Label htmlFor="jaEstudou" className="text-sm">
-                      Já estudei na UP anteriormente
-                    </Label>
-                  </div>
-
                   <div className="flex items-center space-x-2">
                     <Checkbox
                       id="receberInformacoes"
