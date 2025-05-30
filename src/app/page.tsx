@@ -8,10 +8,10 @@ import { Badge } from "@/components/ui/badge"
 import { Clock, Mail, MapPin, Phone} from "lucide-react"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
-import img1 from "@/app/images/1.jpeg"
-import img2 from "@/app/images/2.jpeg"
-import img3 from "@/app/images/3.jpeg"
-import img4 from "@/app/images/4.jpeg"
+import img1 from "public/1.jpeg"
+import img2 from "public/2.jpeg"
+import img3 from "public/3.jpeg"
+import img4 from "public/4.jpeg"
 
 const courses = [
   {
