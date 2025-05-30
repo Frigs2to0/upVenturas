@@ -1,14 +1,17 @@
 "use client"
 
-import { useSession } from "next-auth/react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { BookOpen, Users, Award, Clock, MapPin, Phone, Mail } from "lucide-react"
+import { Clock, Mail, MapPin, Phone} from "lucide-react"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
+import img1 from "@/app/images/1.jpeg"
+import img2 from "@/app/images/2.jpeg"
+import img3 from "@/app/images/3.jpeg"
+import img4 from "@/app/images/4.jpeg"
 
 const courses = [
   {
@@ -19,7 +22,7 @@ const courses = [
     description:
       "Forme-se em uma das áreas mais promissoras da tecnologia. Aprenda desenvolvimento de sistemas, metodologias ágeis e gestão de projetos.",
     highlights: ["Metodologias Ágeis", "Desenvolvimento Full Stack", "Gestão de Projetos", "DevOps"],
-    image: "/placeholder.svg?height=200&width=300",
+    image: img1,
   },
   {
     id: 2,
@@ -29,7 +32,7 @@ const courses = [
     description:
       "Desenvolva competências em gestão empresarial, liderança e estratégia. Prepare-se para liderar organizações do futuro.",
     highlights: ["Gestão Estratégica", "Liderança", "Marketing Digital", "Empreendedorismo"],
-    image: "/placeholder.svg?height=200&width=300",
+    image: img3,
   },
   {
     id: 3,
@@ -38,7 +41,7 @@ const courses = [
     modality: "Presencial",
     description: "Curso de excelência com infraestrutura completa. Formação humanizada e técnica de alta qualidade.",
     highlights: ["Hospital Escola", "Laboratórios Modernos", "Residência Médica", "Pesquisa Científica"],
-    image: "/placeholder.svg?height=200&width=300",
+    image: img2,
   },
   {
     id: 4,
@@ -48,24 +51,22 @@ const courses = [
     description:
       "Desenvolva sua criatividade e domine as ferramentas digitais. Crie identidades visuais e experiências únicas.",
     highlights: ["Adobe Creative Suite", "Branding", "UX/UI Design", "Motion Graphics"],
-    image: "/placeholder.svg?height=200&width=300",
+    image: img4,
   },
 ]
 
 export default function HomePage() {
-  const { data: session, status } = useSession()
 
   return (
     <div className="min-h-screen bg-white">
       <Header />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
+      {/* Hero */}
+      <section className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20 text-center">
+        <div className="container mx-auto px-4">
           <h2 className="text-5xl font-bold mb-6">Transforme seu futuro com a UP</h2>
           <p className="text-xl mb-8 max-w-3xl mx-auto">
-            Há mais de 30 anos formando profissionais de excelência. Descubra os melhores cursos e construa uma carreira
-            de sucesso.
+            Há mais de 30 anos formando profissionais de excelência. Descubra os melhores cursos e construa uma carreira de sucesso.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="#cursos">
@@ -86,51 +87,26 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-blue-900 mb-2">30+</div>
-              <p className="text-gray-600">Anos de tradição</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-blue-900 mb-2">50+</div>
-              <p className="text-gray-600">Cursos oferecidos</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-blue-900 mb-2">25k+</div>
-              <p className="text-gray-600">Alunos formados</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-blue-900 mb-2">95%</div>
-              <p className="text-gray-600">Empregabilidade</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Courses Section */}
+      {/* Courses */}
       <section id="cursos" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Nossos Cursos em Destaque</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Conheça alguns dos nossos principais cursos, desenvolvidos com excelência acadêmica e foco no mercado de
-              trabalho.
+              Conheça alguns dos nossos principais cursos, desenvolvidos com excelência acadêmica e foco no mercado de trabalho.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {courses.map((course) => (
               <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="relative">
+                <div className="relative w-full h-48">
                   <Image
-                    src={course.image || "/placeholder.svg"}
+                    src={course.image}
                     alt={course.name}
-                    width={300}
-                    height={200}
-                    className="w-full h-48 object-cover"
+                    fill
+                    className="object-cover"
+                    priority
                   />
                   <Badge className="absolute top-4 right-4 bg-orange-500">{course.modality}</Badge>
                 </div>
@@ -157,9 +133,7 @@ export default function HomePage() {
                   </div>
                   <div className="flex gap-2">
                     <Button className="flex-1 bg-blue-900 hover:bg-blue-800">Saiba mais</Button>
-                    <Button variant="outline" className="flex-1">
-                      Inscreva-se
-                    </Button>
+                    <Button variant="outline" className="flex-1">Inscreva-se</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -168,54 +142,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="sobre" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Por que escolher a UP?</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                A Universidade Positivo é reconhecida pela excelência acadêmica e pela formação de profissionais
-                preparados para os desafios do mercado.
-              </p>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <Award className="w-6 h-6 text-orange-500 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Excelência Acadêmica</h3>
-                    <p className="text-gray-600">Corpo docente qualificado e infraestrutura moderna</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Users className="w-6 h-6 text-orange-500 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Networking</h3>
-                    <p className="text-gray-600">Conecte-se com profissionais e empresas do mercado</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <BookOpen className="w-6 h-6 text-orange-500 mt-1" />
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Metodologia Inovadora</h3>
-                    <p className="text-gray-600">Aprendizado prático e focado no mercado de trabalho</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <Image
-                src="/placeholder.svg?height=400&width=500"
-                alt="Campus da UP"
-                width={500}
-                height={400}
-                className="rounded-lg shadow-lg"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
       <section id="contato" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
